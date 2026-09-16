@@ -1,0 +1,17 @@
+# Gitleaks allowlist for this repo.
+#
+# Each line below is a fingerprint of a finding that was manually reviewed
+# and confirmed to NOT be a real secret. Do not add entries here without
+# investigating the actual finding first - see gitleaks-report.json in the
+# CI run's artifacts for full details before allowlisting anything new.
+#
+# scripts/wazuh-userdata.sh.tpl:curl-auth-user:79
+#   Match: `curl -sk -u admin:SecretPassword ...`
+#   This is Wazuh's own published default demo credential for its
+#   single-node Docker quickstart (documented at
+#   https://github.com/wazuh/wazuh-docker), not a secret specific to this
+#   deployment. It is intentionally used as-is for this lab and flagged in
+#   the README as a "rotate before any real/production use" tradeoff -
+#   exactly the kind of finding meant to be reviewed and consciously
+#   accepted, not a genuine credential leak.
+scripts/wazuh-userdata.sh.tpl:curl-auth-user:79
