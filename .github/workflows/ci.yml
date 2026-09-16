@@ -51,6 +51,7 @@ jobs:
           scan-ref: "terraform"
           exit-code: "1"
           severity: "CRITICAL,HIGH"
+          trivyignores: ".trivyignore"
 
       - name: Run Trivy filesystem scan (scripts + deps)
         uses: aquasecurity/trivy-action@v0.36.0
@@ -60,6 +61,7 @@ jobs:
           exit-code: "1"
           severity: "CRITICAL,HIGH"
           skip-dirs: ".git"
+          trivyignores: ".trivyignore"
 
   gitleaks-secret-scan:
     name: Gitleaks secret scan

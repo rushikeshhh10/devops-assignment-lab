@@ -30,6 +30,10 @@ resource "aws_instance" "wazuh" {
   # this instance at all.
   associate_public_ip_address = true
 
+  metadata_options {
+    http_tokens = "required"
+  }
+
   root_block_device {
     volume_size = 20
     volume_type = "gp3"

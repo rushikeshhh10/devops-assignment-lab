@@ -7,6 +7,10 @@ resource "aws_instance" "app" {
   key_name                    = aws_key_pair.lab.key_name
   associate_public_ip_address = true
 
+  metadata_options {
+    http_tokens = "required"
+  }
+
   root_block_device {
     volume_size = 20
     volume_type = "gp3"

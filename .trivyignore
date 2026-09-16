@@ -1,0 +1,24 @@
+# Trivy IaC allowlist for this repo.
+#
+# Each entry below was manually reviewed. These are not oversights - they
+# are consequences of explicit, documented cost/architecture tradeoffs
+# elsewhere in this lab (see README's "Cloud security" section). Do not add
+# entries here without reviewing the actual finding first.
+
+# AVD-AWS-0104: Security groups allow unrestricted egress (0.0.0.0/0).
+# Accepted: both VMs need outbound internet access (apt updates, Docker
+# image pulls, curl-based installs, git clone of the Wazuh Docker repo) and
+# there is deliberately no NAT Gateway (cost tradeoff for a short-lived
+# evaluation lab). Ingress is what actually matters for exposure, and it is
+# tightly restricted: the App VM only accepts SSH/HTTPS from an evaluator IP
+# allowlist plus a crypto-authenticated WireGuard port, and the Wazuh VM
+# accepts nothing from the internet at all - every one of its ingress rules
+# references the App security group by ID, not a CIDR block.
+AVD-AWS-0104
+
+# AVD-AWS-0164: Public subnet auto-assigns public IPs to instances.
+# Accepted: for the same NAT Gateway cost-avoidance reason above, both VMs
+# need a public IP purely to reach the internet outbound. This does not
+# translate into inbound exposure - that's controlled entirely by security
+# group rules (see AVD-AWS-0104 note above), not by subnet routing.
+AVD-AWS-0164

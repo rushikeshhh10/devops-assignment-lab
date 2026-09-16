@@ -6,12 +6,17 @@
 # CI run's artifacts for full details before allowlisting anything new.
 #
 # scripts/wazuh-userdata.sh.tpl:curl-auth-user:79
-#   Match: `curl -sk -u admin:SecretPassword ...`
-#   This is Wazuh's own published default demo credential for its
-#   single-node Docker quickstart (documented at
-#   https://github.com/wazuh/wazuh-docker), not a secret specific to this
-#   deployment. It is intentionally used as-is for this lab and flagged in
-#   the README as a "rotate before any real/production use" tradeoff -
-#   exactly the kind of finding meant to be reviewed and consciously
-#   accepted, not a genuine credential leak.
+#   That line authenticates to the Wazuh Indexer API using Wazuh's own
+#   published default demo credentials for its single-node Docker
+#   quickstart (documented at https://github.com/wazuh/wazuh-docker), not a
+#   secret specific to this deployment. It is intentionally used as-is for
+#   this lab and flagged in the README as a "rotate before any
+#   real/production use" tradeoff - exactly the kind of finding meant to be
+#   reviewed and consciously accepted, not a genuine credential leak.
 scripts/wazuh-userdata.sh.tpl:curl-auth-user:79
+
+# scripts/wazuh-userdata.sh.tpl:curl-auth-user:89
+#   Same situation as above - Wazuh's published default demo credential for
+#   its manager REST API (wazuh-wui / its documented default password),
+#   used as-is in this lab and flagged for rotation in the README.
+scripts/wazuh-userdata.sh.tpl:curl-auth-user:89
