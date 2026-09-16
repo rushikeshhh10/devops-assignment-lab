@@ -6,7 +6,7 @@ automatically by `terraform/verify.tf`'s deployment gate on every `terraform app
     root@app-vm:~# sudo python3 /tmp/verify.py \
         --app-url https://localhost/ \
         --indexer-url https://<WAZUH_PRIVATE_IP>:9200 \
-        --indexer-user admin --indexer-pass SecretPassword \
+        --indexer-user admin --indexer-pass <REDACTED> \
         --readiness-timeout 60 --delivery-timeout 60
 
     [READY] Juice Shop / WAF
@@ -19,9 +19,11 @@ automatically by `terraform/verify.tf`'s deployment gate on every `terraform app
 
 ## Direct Indexer query confirming the same event (run on the Wazuh VM)
 
-    root@wazuh-vm:~# curl -sk -u admin:SecretPassword \
-        "https://localhost:9200/wazuh-alerts-*/_search?q=rule.id:100010&pretty" \
-        | grep -A5 "verify=phase4livetest"
+Authenticated against the Indexer's REST API (basic auth, credentials redacted) and
+filtered to alerts matched by our custom rule 100010:
+
+    root@wazuh-vm:~# QUERY_URL="https://localhost:9200/wazuh-alerts-*/_search?q=rule.id:100010&pretty"
+    root@wazuh-vm:~# curl -sk --user "<REDACTED>" "$QUERY_URL" | grep -A5 "verify=phase4livetest"
 
                 "uri" : "/?verify=phase4livetest"
               },
@@ -40,6 +42,6 @@ indexed into wazuh-alerts-* on the Wazuh Indexer, queryable via its REST API.
 
 Index confirmed populated:
 
-    root@wazuh-vm:~# curl -sk -u admin:SecretPassword "https://localhost:9200/_cat/indices/wazuh-alerts-*?v"
+    root@wazuh-vm:~# curl -sk --user "<REDACTED>" "https://localhost:9200/_cat/indices/wazuh-alerts-*?v"
     health status index                       ... docs.count ...
     green  open   wazuh-alerts-4.x.<date>     ...    398      ...
