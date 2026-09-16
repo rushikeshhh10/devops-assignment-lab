@@ -1,0 +1,29 @@
+<!--
+  Deploy this to the Wazuh MANAGER container (not the App VM) at:
+    /var/ossec/etc/rules/caddy_rules.xml
+
+  Wazuh auto-loads every .xml file under etc/rules/ by default (no need to
+  edit ossec.conf's <rule_dir> list), so this file just needs to exist there
+  and the manager restarted.
+
+  Rule 100010 matches ANY log line Wazuh receives whose source location is
+  the Caddy access log file and which contains the literal substring "uri"
+  (present in every Caddy JSON access log entry, e.g. "uri":"/?id=..."). This
+  deliberately does not depend on JSON field-path decoding working a
+  particular way - it's a plain substring match on the source file's raw
+  content, which is the most robust option given Coraza/Caddy's JSON log
+  shape can vary slightly by version.
+
+  Level 3 clears Wazuh's default minimum alert threshold, so every matching
+  line becomes an alert and gets indexed into wazuh-alerts-* by the bundled
+  Filebeat shipper without any additional archive-indexing configuration -
+  this satisfies the assignment's "configure a test rule or archive indexing
+  as needed" requirement via the simpler of the two options.
+-->
+<group name="caddy,">
+  <rule id="100010" level="3">
+    <location>/var/log/caddy/access.log</location>
+    <match>uri</match>
+    <description>Caddy WAF access log event captured</description>
+  </rule>
+</group>

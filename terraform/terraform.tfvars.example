@@ -1,0 +1,16 @@
+# Copy this file to terraform.tfvars and fill in real values.
+# terraform.tfvars is gitignored - never commit it.
+
+aws_region      = "ap-south-1"
+aws_profile     = "devops-assignment"
+project_name    = "devops-assignment"
+
+# Your public IP (or the evaluator's), in CIDR form. Get yours with: curl.exe ifconfig.me
+allowed_ip = "103.197.75.174/32"
+
+# Path to your SSH public key generated earlier
+public_key_path = "C:/Users/Siddhi Jadhav/.ssh/devops-assignment.pub"
+
+# Path to the matching private key - used only locally by Terraform to SSH in
+# and run the post-deploy verifier. Never committed (see .gitignore).
+ssh_private_key_path = "C:/Users/Siddhi Jadhav/.ssh/devops-assignment"

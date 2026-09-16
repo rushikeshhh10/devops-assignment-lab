@@ -1,0 +1,27 @@
+# Terraform
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+crash.log
+crash.*.log
+.terraform.lock.hcl
+
+# Secrets / keys
+*.pem
+*.key
+id_rsa*
+id_ed25519*
+devops-assignment
+devops-assignment.pub
+.env
+*.env
+
+# Wazuh / evidence
+wazuh/certs/
+evidence/*.raw
+
+# OS
+.DS_Store
+Thumbs.db
