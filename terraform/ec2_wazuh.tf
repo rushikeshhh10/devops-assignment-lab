@@ -15,12 +15,12 @@ resource "aws_ebs_volume" "wazuh_data" {
 }
 
 resource "aws_instance" "wazuh" {
-  ami                         = data.aws_ami.ubuntu.id
-  instance_type               = var.wazuh_instance_type
-  subnet_id                   = aws_subnet.public.id
-  vpc_security_group_ids      = [aws_security_group.wazuh.id]
-  iam_instance_profile        = aws_iam_instance_profile.instance.name
-  key_name                    = aws_key_pair.lab.key_name
+  ami                    = data.aws_ami.ubuntu.id
+  instance_type          = var.wazuh_instance_type
+  subnet_id              = aws_subnet.public.id
+  vpc_security_group_ids = [aws_security_group.wazuh.id]
+  iam_instance_profile   = aws_iam_instance_profile.instance.name
+  key_name               = aws_key_pair.lab.key_name
 
   # Deliberately NOT associating a public IP is not possible without a NAT
   # Gateway (which costs money) for outbound package/image pulls, so it does

@@ -15,7 +15,7 @@ resource "aws_instance" "app" {
 
   user_data = templatefile("${path.module}/../scripts/app-userdata.sh.tpl", {
     juice_shop_manifest = file("${path.module}/../k8s/juice-shop.yaml")
-    wazuh_manager_ip     = aws_instance.wazuh.private_ip
+    wazuh_manager_ip    = aws_instance.wazuh.private_ip
   })
 
   tags = {
